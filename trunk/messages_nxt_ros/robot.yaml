@@ -1,0 +1,9 @@
+nxt_robot:
+  - type: MessagesReader
+    name: mess_reader
+    port: PORT_NO 
+    desired_frequency: 10.0
+  - type: MessagesWriter
+    name: mess_writer
+    port: PORT_NO 
+    desired_frequency: 10.0
