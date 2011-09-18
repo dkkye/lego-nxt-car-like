@@ -1,0 +1,40 @@
+<launch>
+  <param name="robot_description" textfile="$(find messages_nxt_ros)/robot.urdf"/>
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    <param name="publish_frequency" value="100.0"/>
+  </node>
+  
+  <node pkg="messages_nxt_ros" type="messages_nxt_ros.py" name="messages_nxt_ros" output="screen" respawn="true">
+    <rosparam command="load" file="$(find messages_nxt_ros)/robot.yaml" />    
+    <!--param name="host" value="00:16:53:0D:29:63"/-->
+  </node>	 
+
+  <node pkg="messages_nxt_ros" type="scan_to_pointcloud.py" name="scan_to_pointcloud" output="screen" respawn="true">
+  </node>
+  
+  <node pkg="messages_nxt_ros" type="encoder_to_odom.py" name="encoder_to_odom" output="screen" respawn="true">
+  </node>
+
+	
+  <!-- fixed transform -->
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_fixed_publisher" args="0 0 0 0 0 0 base_footprint base_link 100"/>
+  <!--
+  <node pkg="tf" type="static_transform_publisher" name="odom_fixed_publisher" args="0 0 0 0 0 0 odom_combined base_footprint 100"/>
+  -->
+  <!-- robot pose ekf -->
+  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="odom_combined"/>
+    <remap from="imu_data" to="gyro_imu" />
+  </node>
+
+  <node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" >
+    <rosparam file="$(find costmap_nxtcar)/nxtcar.yaml" command="load" ns="costmap" />
+  </node>
+  
+  <node pkg="controler_nxtcar" type="controler_nxtcar" name="controler_nxtcar" output="screen" respawn="true">
+  </node>
+
+
+
+</launch>

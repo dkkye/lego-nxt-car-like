@@ -1,0 +1,16 @@
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/ROSBUILD_genmsg_cpp.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/ROSBUILD_genmsg_lisp.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/ROSBUILD_gensrv_cpp.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/ROSBUILD_gensrv_lisp.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/clean-test-results.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/controler_nxtcar.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/rosbuild_precompile.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/rosbuild_premsgsrvgen.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/rospack_genmsg.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/rospack_genmsg_libexe.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/rospack_gensrv.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/test.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/test-future.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/test-results.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/test-results-run.dir
+/home/alex/my_ros_packages/controler_nxtcar/CMakeFiles/tests.dir

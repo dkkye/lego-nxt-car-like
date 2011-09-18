@@ -1,0 +1,17 @@
+<package>
+  <description brief="controler_nxtcar">
+
+     controler_nxtcar
+
+  </description>
+  <author>alex</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/controler_nxtcar</url>
+  <depend package="messages_nxt_ros"/>
+  <depend package="geometry_msgs"/>
+  <depend package="costmap_2d"/>
+
+</package>
+
+
