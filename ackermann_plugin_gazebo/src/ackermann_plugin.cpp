@@ -28,6 +28,10 @@
  *
  * Copyright (C) 2011, Nicu Stiurca, Jack O'Quin
  */
+ /*
+  * Adapted for Lego NXT
+  * Copyright (C) 2011, Alexandr Buyval
+  */
 
 #include <algorithm>
 #include <assert.h>
