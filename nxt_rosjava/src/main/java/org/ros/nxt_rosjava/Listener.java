@@ -22,7 +22,8 @@ import org.ros.node.DefaultNodeFactory;
 import org.ros.node.Node;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMain;
-import org.ros.node.topic.Subscriber;
+import lejos.nxt.*;
+//import org.ros.node.topic.Subscriber;
 
 public class Listener implements NodeMain {
 
@@ -32,12 +33,18 @@ public class Listener implements NodeMain {
   public void main(NodeConfiguration configuration) {
     try {
       node = new DefaultNodeFactory().newNode("listener", configuration);
+	  final Motor motor = new Motor();
+	  //motor.A.setSpeed(300);
       final Log log = node.getLog();
       node.newSubscriber("cmd_vel", "geometry_msgs/Twist",
           new MessageListener<org.ros.message.geometry_msgs.Twist>() {
             @Override
             public void onNewMessage(org.ros.message.geometry_msgs.Twist message) {
               log.info("Linear: \"" + message.linear.x + "\"");
+              if (message.linear.x == 1.0)
+            	  motor.A.forward();
+              if (message.linear.x == -1.0)
+            	  motor.A.backward();
             }
           });
     } catch (Exception e) {
