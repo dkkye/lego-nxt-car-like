@@ -1,0 +1,15 @@
+<package>
+  <description brief="nxt_rosjava_msgs">
+
+     nxt_rosjava_msgs
+
+  </description>
+  <author>alex</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/nxt_rosjava_msgs</url>
+  <depend package="std_msgs"/>
+  <depend package="geometry_msgs"/>
+</package>
+
+
