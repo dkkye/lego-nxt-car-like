@@ -12,6 +12,8 @@
   <depend package="rosjava" />
   <depend package="std_msgs" />
   <depend package="geometry_msgs"/>
+  <depend package="nxt_rosjava_msgs"/>
+  <depend package="sensor_msgs" /> 
   
   <export>
     <rosjava-src location="src/main/java" />

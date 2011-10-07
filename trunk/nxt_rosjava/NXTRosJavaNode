@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec java -jar `rospack find nxt_rosjava`/target/org.ros.rosjava.nxt_rosjava-0.0.0.jar org.ros.nxt_rosjava.Listener $@
