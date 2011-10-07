@@ -23,30 +23,228 @@ import org.ros.node.Node;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMain;
 import lejos.nxt.*;
+import lejos.nxt.remote.RemoteMotor;
+
+import org.ros.node.topic.Publisher;
+import org.ros.node.parameter.ParameterTree;
+import org.ros.namespace.GraphName;
+import org.ros.namespace.NameResolver;
+import java.util.*;
+
 //import org.ros.node.topic.Subscriber;
+
+abstract class Device {
+	
+	double desired_period;
+	org.ros.message.Time last_run;
+	boolean initialized;
+	Node node_owner;
+	String name;
+	String frame_id;
+
+	Device(int frequency, Node node, String name_dev, String _frame_id){
+		desired_period = 1 / frequency;
+		initialized = false;
+		node_owner = node;
+		name = name_dev;
+		frame_id = _frame_id;
+	}
+	
+	boolean needs_trigger(){
+        if (!initialized){
+            initialized = true;
+            last_run = node_owner.getCurrentTime();
+            return false;
+        }
+        org.ros.message.Time curTime = node_owner.getCurrentTime();
+        double period = (curTime.secs + curTime.nsecs/1000000000) - (last_run.secs + last_run.nsecs/1000000000);
+        
+        return period > desired_period;
+	}
+	
+	abstract void do_trigger();
+	
+}
+
+class UltraSonicSensorNXT extends Device {
+	
+	UltrasonicSensor sonic;
+	Publisher<org.ros.message.nxt_rosjava_msgs.Range> publisher;
+	
+	UltraSonicSensorNXT(int port, int frequency, Node node, String name_dev, String _frame_id) {
+		super(frequency, node, name_dev, _frame_id);
+		switch (port){
+			case 1: sonic = new UltrasonicSensor(SensorPort.S1); break;
+			case 2: sonic = new UltrasonicSensor(SensorPort.S2); break;
+			case 3: sonic = new UltrasonicSensor(SensorPort.S3); break;
+			case 4: sonic = new UltrasonicSensor(SensorPort.S4); break;
+		}
+		
+	    publisher = node.newPublisher("ultrasonic_sensor", "nxt_rosjava_msgs/Range");
+	}
+	
+	void do_trigger(){
+		last_run = node_owner.getCurrentTime();
+        org.ros.message.nxt_rosjava_msgs.Range msg = new org.ros.message.nxt_rosjava_msgs.Range();
+        msg.header.stamp = last_run;
+        msg.header.frame_id = frame_id;
+        msg.range = sonic.getDistance();
+        publisher.publish(msg);		
+	}
+	
+}
+
+class TouchSensorNXT extends Device {
+	
+	TouchSensor touch;
+	Publisher<org.ros.message.nxt_rosjava_msgs.Contact> publisher;
+	
+	TouchSensorNXT(int port, int frequency, Node node, String name_dev, String _frame_id) {
+		super(frequency, node, name_dev, _frame_id);
+		switch (port){
+			case 1: touch = new TouchSensor(SensorPort.S1); break;
+			case 2: touch = new TouchSensor(SensorPort.S2); break;
+			case 3: touch = new TouchSensor(SensorPort.S3); break;
+			case 4: touch = new TouchSensor(SensorPort.S4); break;
+		}
+		
+	    publisher = node.newPublisher("touch", "nxt_rosjava_msgs/Contact");
+	}
+	
+	void do_trigger(){
+		last_run = node_owner.getCurrentTime();
+        org.ros.message.nxt_rosjava_msgs.Contact msg = new org.ros.message.nxt_rosjava_msgs.Contact();
+        msg.header.stamp = last_run;
+        msg.header.frame_id = frame_id;
+        msg.contact = touch.isPressed();
+        publisher.publish(msg);		
+	}
+	
+}
+
+class MotorNXT extends Device {
+	
+	RemoteMotor motor;
+	Publisher<org.ros.message.sensor_msgs.JointState> publisher;
+	double POWER_TO_NM;
+	double POWER_MAX;
+	
+	MotorNXT(int port, int frequency, Node node, String name_dev) {
+		super(frequency, node, name_dev, "");
+		POWER_TO_NM = 0.01;
+		POWER_MAX = 100;
+		switch (port){
+			case 1: motor = new Motor().A; break;
+			case 2: motor = new Motor().B; break;
+			case 3: motor = new Motor().C; break;
+		}
+		
+	    publisher = node.newPublisher("joint_state", "sensor_msgs/JointState");
+	    node.newSubscriber("joint_command", "nxt_rosjava_msgs/JointCommand",
+	              new MessageListener<org.ros.message.nxt_rosjava_msgs.JointCommand>() {
+	                @Override
+	                public void onNewMessage(org.ros.message.nxt_rosjava_msgs.JointCommand message) {
+	                	if (message.type.contains("effort")){
+		                	double power = message.effort / POWER_TO_NM;
+		                    if (power > POWER_MAX)
+		                    	power = POWER_MAX;
+		                    else if (power < -POWER_MAX)
+		                    	power = -POWER_MAX;
+		                	power = power>0 ? power : -power; 
+		                	motor.setPower((int)power);
+		                	if (message.effort>0){
+		                		motor.forward();
+		                	}else{
+		                		motor.backward();
+		                	}
+	                	}
+	                	else if (message.type.contains("speed")){
+		                	double speed = message.speed>0 ? message.speed : -message.speed; 
+		                	motor.setSpeed((int)speed);
+		                	if (message.speed>0){
+		                		motor.forward();
+		                	}else{
+		                		motor.backward();
+		                	}
+	                	}
+	                	else if (message.type.contains("angle")){
+	                		motor.rotateTo((int) message.angle, true); 
+	                	}
+	                	
+	                }
+	              });
+	}
+	
+	
+	
+	
+	void do_trigger(){
+		
+		last_run = node_owner.getCurrentTime();
+		org.ros.message.sensor_msgs.JointState msg = new org.ros.message.sensor_msgs.JointState();
+		msg.header.stamp = node_owner.getCurrentTime();
+		msg.name.add(name);
+		msg.position = new double[1];
+		msg.effort = new double[1];
+		msg.velocity = new double[1];
+		msg.position[0] = (double) motor.getTachoCount()* Math.PI / 180.0;
+		msg.effort[0] = (double) motor.getPower()* POWER_TO_NM;
+		msg.velocity[0] = (double) motor.getSpeed();
+        publisher.publish(msg);
+        		
+	}
+	
+}
 
 public class Listener implements NodeMain {
 
   private Node node;
+  ArrayList<Device> lst_devices;
 
   @Override
   public void main(NodeConfiguration configuration) {
     try {
       node = new DefaultNodeFactory().newNode("listener", configuration);
-	  final Motor motor = new Motor();
-	  //motor.A.setSpeed(300);
       final Log log = node.getLog();
-      node.newSubscriber("cmd_vel", "geometry_msgs/Twist",
-          new MessageListener<org.ros.message.geometry_msgs.Twist>() {
-            @Override
-            public void onNewMessage(org.ros.message.geometry_msgs.Twist message) {
-              log.info("Linear: \"" + message.linear.x + "\"");
-              if (message.linear.x == 1.0)
-            	  motor.A.forward();
-              if (message.linear.x == -1.0)
-            	  motor.A.backward();
-            }
-          });
+      ParameterTree param = node.newParameterTree();
+      GraphName paramNamespace = new GraphName(param.getString("parameter_namespace"));
+      NameResolver resolver = node.getResolver().createResolver(paramNamespace);
+      Map setttings_map = param.getMap(resolver.resolve("setttings"));
+      Object[] list = param.getList(resolver.resolve("list")).toArray();
+      lst_devices = new ArrayList<Device>();
+      for (int i = 0; i < list.length; i++) { 
+    	  String type = (String) ((Map) setttings_map.get(list[i])).get("type");
+    	  String name_dev = (String) ((Map) setttings_map.get(list[i])).get("name");
+    	  String frame_id = (String) ((Map) setttings_map.get(list[i])).get("frame_id");
+    	  //int port = Integer.parseInt((String) ((Map) setttings_map.get(list[i])).get("port"));
+    	  log.info("Device: " + list[i] + " type: " + type);
+    	  double desired_frequency = (Double) ((Map) setttings_map.get(list[i])).get("desired_frequency");
+    	  if (type.contains("ultrasonic")){
+    		  UltraSonicSensorNXT dev = new UltraSonicSensorNXT(4, (int)desired_frequency, node, name_dev, frame_id);
+    		  lst_devices.add(dev);  
+    	  }
+    	  if (type.contains("motor")){
+    		  MotorNXT dev = new MotorNXT(1, (int)desired_frequency, node, name_dev);
+    		  lst_devices.add(dev);  
+    	  }
+    	  if (type.contains("touch")){
+    		  TouchSensorNXT dev = new TouchSensorNXT(3, (int)desired_frequency, node, name_dev, frame_id);
+    		  lst_devices.add(dev);  
+    	  }
+      }
+      //Iterator<Device> iter = lst_devices.iterator();
+      while (true) {
+    	  log.info("Start cycle");
+          for(int i = 0; i<lst_devices.size(); i++) {
+        	  log.info("Do trigger device " + i);
+        	  Device curDevice = lst_devices.get(i);
+        	  if (curDevice.needs_trigger()){
+        		  curDevice.do_trigger();
+        	  }
+          }
+          
+          Thread.sleep(1000);
+        }
     } catch (Exception e) {
       if (node != null) {
         node.getLog().fatal(e);

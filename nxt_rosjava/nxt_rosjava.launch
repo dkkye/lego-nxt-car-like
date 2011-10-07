@@ -1,0 +1,9 @@
+<launch>
+
+  <rosparam command="load" file="$(find nxt_rosjava)/robot.yaml" />
+  <!--<node pkg="nxt_rosjava" type="NXTRosJavaNode" name="param_client" />
+
+
+   TODO test inside of a namespace -->
+
+</launch>
