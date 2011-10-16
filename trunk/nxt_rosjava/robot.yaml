@@ -1,16 +1,28 @@
 parameter_namespace: nxt_robot
 nxt_robot:
-  list: [motorA,sonarIn4]
+  list: [motorA,motorB,motorC,sonarIn4]
   setttings:
     motorA:
       type: motor
-      name: motorA
-      port: 1
-      frame_id: motor_link
+      name: radar_motor
+      port: 1.0
+      frame_id: radar_motor_link
+      desired_frequency: 50.0
+    motorB:
+      type: motor
+      name: power_motor
+      port: 2.0
+      frame_id: power_motor_link
+      desired_frequency: 20.0
+    motorC:
+      type: motor
+      name: steering_motor
+      port: 3.0
+      frame_id: steering_motor_link
       desired_frequency: 20.0
     sonarIn4:
       type: ultrasonic
       frame_id: ultrasonic_link
       name: ultrasonic_sensor
-      port: 4
+      port: 4.0
       desired_frequency: 5.0

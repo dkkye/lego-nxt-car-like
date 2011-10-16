@@ -1,9 +1,8 @@
 <launch>
 
   <rosparam command="load" file="$(find nxt_rosjava)/robot.yaml" />
-  <!--<node pkg="nxt_rosjava" type="NXTRosJavaNode" name="param_client" />
 
-
-   TODO test inside of a namespace -->
-
+  <node pkg="nxt_steering_control" type="nxt_steering_control.py" name="nxt_steering_control" output="screen" respawn="true">
+  </node>
+  
 </launch>

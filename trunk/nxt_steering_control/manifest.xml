@@ -1,0 +1,17 @@
+<package>
+  <description brief="nxt_steering_control">
+
+     nxt_steering_control
+
+  </description>
+  <author>alex</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/nxt_steering_control</url>
+  <depend package="art_msgs"/>
+  <depend package="nxt_rosjava_msgs"/>
+  <depend package="std_msgs" />
+  <depend package="geometry_msgs"/>
+</package>
+
+

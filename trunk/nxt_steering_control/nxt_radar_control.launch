@@ -1,0 +1,6 @@
+<launch>
+
+  <node pkg="nxt_steering_control" type="nxt_radar_control.py" name="nxt_radar_control" output="screen" respawn="true">
+  </node>
+
+</launch>
