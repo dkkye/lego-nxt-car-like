@@ -25,4 +25,4 @@ nxt_robot:
       frame_id: ultrasonic_link
       name: ultrasonic_sensor
       port: 4.0
-      desired_frequency: 5.0
+      desired_frequency: 50.0
