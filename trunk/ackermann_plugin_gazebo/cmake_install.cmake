@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/my_ros_packages/ackermann_plugin_gazebo
+# Install script for directory: /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/alex/my_ros_packages/ackermann_plugin_gazebo/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/alex/my_ros_packages/ackermann_plugin_gazebo/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)

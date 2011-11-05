@@ -239,7 +239,7 @@ void AckermannPlugin::UpdateChild()
 
   // compute radius of curvature
   // may be infinite. that's ok
-  r = wsl * tan(TAU/2 - a);
+  r = wsl * tan(TAU/4 - a);
 
   // compute displacement along arc
   dr = (d1 + d2) / 2;
@@ -270,7 +270,7 @@ void AckermannPlugin::UpdateChild()
     joints[STEER]->SetMaxForce(0, **(steerTorqueP));
   }
 
-  write_position_data();
+  //write_position_data();
   publish_odometry();
 
   //myIface->Unlock();

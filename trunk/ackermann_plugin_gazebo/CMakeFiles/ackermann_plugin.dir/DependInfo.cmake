@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alex/my_ros_packages/ackermann_plugin_gazebo/src/ackermann_plugin.cpp" "/home/alex/my_ros_packages/ackermann_plugin_gazebo/CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o"
+  "/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/src/ackermann_plugin.cpp" "/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

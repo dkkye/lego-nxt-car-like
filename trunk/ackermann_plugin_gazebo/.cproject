@@ -155,7 +155,7 @@
 <pathentry kind="mac" name="__EXCEPTIONS" path="" value="1"/>
 <pathentry kind="mac" name="__GCC_HAVE_DWARF2_CFI_ASM" path="" value="1"/>
 <pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
-<pathentry include="/home/alex/my_ros_packages/ackermann_plugin_gazebo/include" kind="inc" path="" system="true"/>
+<pathentry include="/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/include" kind="inc" path="" system="true"/>
 <pathentry include="/opt/ros/diamondback/stacks/simulator_gazebo/gazebo_tools/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/include/libxml2" kind="inc" path="" system="true"/>
 <pathentry include="/opt/ros/diamondback/stacks/simulator_gazebo/gazebo/gazebo/include" kind="inc" path="" system="true"/>
@@ -219,8 +219,8 @@
 <pathentry include="/opt/ros/diamondback/ros/tools/rospack" kind="inc" path="" system="true"/>
 <pathentry include="/opt/ros/diamondback/ros/tools/rospack/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/include" kind="inc" path="" system="true"/>
-<pathentry include="/home/alex/my_ros_packages/ackermann_plugin_gazebo/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-<pathentry include="/home/alex/my_ros_packages/ackermann_plugin_gazebo/srv_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/srv_gen/cpp/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/local/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/lib/gcc/i686-linux-gnu/4.4.5/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/lib/gcc/i686-linux-gnu/4.4.5/include-fixed" kind="inc" path="" system="true"/>

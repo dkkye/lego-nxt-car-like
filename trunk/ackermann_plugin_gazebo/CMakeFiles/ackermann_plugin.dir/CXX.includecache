@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/alex/my_ros_packages/ackermann_plugin_gazebo/src/ackermann_plugin.cpp
+/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/src/ackermann_plugin.cpp
 algorithm
 -
 assert.h

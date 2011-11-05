@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/my_ros_packages/ackermann_plugin_gazebo
+CMAKE_SOURCE_DIR = /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/my_ros_packages/ackermann_plugin_gazebo
+CMAKE_BINARY_DIR = /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo
 
 # Utility rule file for rospack_gensrv.
 
@@ -57,6 +57,6 @@ CMakeFiles/rospack_gensrv.dir/clean:
 .PHONY : CMakeFiles/rospack_gensrv.dir/clean
 
 CMakeFiles/rospack_gensrv.dir/depend:
-	cd /home/alex/my_ros_packages/ackermann_plugin_gazebo && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo/CMakeFiles/rospack_gensrv.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/CMakeFiles/rospack_gensrv.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/rospack_gensrv.dir/depend
 
