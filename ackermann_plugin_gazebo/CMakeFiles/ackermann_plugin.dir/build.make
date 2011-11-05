@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/my_ros_packages/ackermann_plugin_gazebo
+CMAKE_SOURCE_DIR = /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/my_ros_packages/ackermann_plugin_gazebo
+CMAKE_BINARY_DIR = /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ackermann_plugin.dir/depend.make
@@ -125,17 +125,17 @@ CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o: /opt/ros/diamondback/sta
 CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o: /opt/ros/diamondback/stacks/common_msgs/diagnostic_msgs/msg_gen/generated
 CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o: /opt/ros/diamondback/stacks/common_msgs/diagnostic_msgs/srv_gen/generated
 CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o: /opt/ros/diamondback/stacks/driver_common/driver_base/msg_gen/generated
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/my_ros_packages/ackermann_plugin_gazebo/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -pthread -DdDOUBLE -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o -c /home/alex/my_ros_packages/ackermann_plugin_gazebo/src/ackermann_plugin.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -pthread -DdDOUBLE -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o -c /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/src/ackermann_plugin.cpp
 
 CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -pthread -DdDOUBLE -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/alex/my_ros_packages/ackermann_plugin_gazebo/src/ackermann_plugin.cpp > CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -pthread -DdDOUBLE -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/src/ackermann_plugin.cpp > CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.i
 
 CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -pthread -DdDOUBLE -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/alex/my_ros_packages/ackermann_plugin_gazebo/src/ackermann_plugin.cpp -o CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -pthread -DdDOUBLE -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -DTIXML_USE_STL -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/src/ackermann_plugin.cpp -o CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.s
 
 CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o.requires:
 .PHONY : CMakeFiles/ackermann_plugin.dir/src/ackermann_plugin.o.requires
@@ -173,6 +173,6 @@ CMakeFiles/ackermann_plugin.dir/clean:
 .PHONY : CMakeFiles/ackermann_plugin.dir/clean
 
 CMakeFiles/ackermann_plugin.dir/depend:
-	cd /home/alex/my_ros_packages/ackermann_plugin_gazebo && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo /home/alex/my_ros_packages/ackermann_plugin_gazebo/CMakeFiles/ackermann_plugin.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo /home/alex/lego-nxt-car-like/ackermann_plugin_gazebo/CMakeFiles/ackermann_plugin.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ackermann_plugin.dir/depend
 

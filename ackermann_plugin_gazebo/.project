@@ -47,7 +47,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/home/alex/my_ros_packages/ackermann_plugin_gazebo</value>
+					<value>/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
@@ -83,7 +83,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/home/alex/my_ros_packages/ackermann_plugin_gazebo</value>
+					<value>/home/alex/lego-nxt-car-like/ackermann_plugin_gazebo</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
