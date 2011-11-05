@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-import roslib; roslib.load_manifest('messages_nxt_ros')  
+import roslib; roslib.load_manifest('nxt_steering_control')  
 import rospy
 import math
 import thread
 from std_msgs.msg import String
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point32
+from sensor_msgs.msg import JointState
 from math import sin, cos
 
 global my_lock
@@ -19,7 +20,7 @@ class Converter:
         self.lastEncoderBackWheel = 0
         self.steeringAngle =0
         self.ratioGearSteering = 0.2
-        self.ratioGearBackWheel = 1.652
+        self.ratioGearBackWheel = -1.652
         self.radiusWheel = 0.021
         self.wheelBaseLenght = 0.3
         self.wheelBaseWidht = 0.12
@@ -45,7 +46,7 @@ class Converter:
 	  self.Angle = self.Angle + deltaAngle;
 	  self.X = self.X + deltaTravel*math.cos(self.Angle)
 	  self.Y = self.Y + deltaTravel*math.sin(self.Angle)
-	  rospy.loginfo('Radius curve='+str(radiusCurve)+' Angle='+str(self.Angle)+' X='+str(self.X)+' Y='+str(self.Y))
+	  #rospy.loginfo('Radius curve='+str(radiusCurve)+' Angle='+str(self.Angle)+' X='+str(self.X)+' Y='+str(self.Y))
   
   def publish_odom(self):
 	  odom = Odometry()
