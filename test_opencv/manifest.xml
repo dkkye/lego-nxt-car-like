@@ -1,0 +1,19 @@
+<package>
+  <description brief="test_opencv">
+
+     test_opencv
+
+  </description>
+  <author>alex</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/test_opencv</url>
+  <depend package="sensor_msgs"/>
+<depend package="opencv2"/>
+<depend package="cv_bridge"/>
+<depend package="roscpp"/>
+<depend package="std_msgs"/>
+<depend package="image_transport"/>
+</package>
+
+
