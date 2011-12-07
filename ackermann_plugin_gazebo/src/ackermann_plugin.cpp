@@ -270,7 +270,7 @@ void AckermannPlugin::UpdateChild()
     joints[STEER]->SetMaxForce(0, **(steerTorqueP));
   }
 
-  //write_position_data();
+  write_position_data();
   publish_odometry();
 
   //myIface->Unlock();
