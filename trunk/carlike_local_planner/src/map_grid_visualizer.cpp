@@ -45,7 +45,7 @@ namespace base_local_planner {
     cost_function_ = cost_function;
 
     ns_nh_ = ros::NodeHandle("~/" + name_);
-    ns_nh_.param("publish_cost_grid_pc", publish_cost_grid_pc_, false);
+    ns_nh_.param("publish_cost_grid_pc", publish_cost_grid_pc_, true);
     ns_nh_.param("global_frame_id", frame_id_, std::string("odom"));
 
     cost_cloud_.header.frame_id = frame_id_;

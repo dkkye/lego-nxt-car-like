@@ -328,7 +328,7 @@ namespace base_local_planner {
     base_odom_.twist.twist.linear.x = msg->twist.twist.linear.x;
     base_odom_.twist.twist.linear.y = msg->twist.twist.linear.y;
     base_odom_.twist.twist.angular.z = msg->twist.twist.angular.z;
-    ROS_DEBUG("In the odometry callback with velocity values (my): (%.2f, %.2f, %.2f)",
+    ROS_DEBUG("In the odometry callback with velocity values (my): (%.5f, %.5f, %.5f)",
         base_odom_.twist.twist.linear.x, base_odom_.twist.twist.linear.y, base_odom_.twist.twist.angular.z);
   }
 
@@ -416,10 +416,12 @@ namespace base_local_planner {
     double yaw = tf::getYaw(goal_point.getRotation());
 
     double goal_th = yaw;
-
+    ROS_DEBUG("Pose %f %f Goal %f %f",global_pose.getOrigin().x(), global_pose.getOrigin().y(), goal_x, goal_y);
     //check to see if we've reached the goal position
     if(goalPositionReached(global_pose, goal_x, goal_y, xy_goal_tolerance_) || xy_tolerance_latch_){
 
+
+    	ROS_DEBUG("Goal reached!");
       //if the user wants to latch goal tolerance, if we ever reach the goal location, we'll
       //just rotate in place
       if(latch_xy_goal_tolerance_)
@@ -492,8 +494,9 @@ namespace base_local_planner {
 
     cmd_vel.angular.z = yaw;
     */
-    cmd_vel.linear.x = 1.0;
+    cmd_vel.linear.x = 0.1;
     cmd_vel.angular.z = accerman_theta;
+    ROS_DEBUG("Accerman theta: %f",accerman_theta);
     
     //if we cannot move... tell someone
     if(path.cost_ < 0){
