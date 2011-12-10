@@ -48,9 +48,9 @@ using namespace std;
 using namespace costmap_2d;
 
 //register this planner as a BaseLocalPlanner plugin
-PLUGINLIB_DECLARE_CLASS(base_local_planner, CarLikeTrajectoryPlannerROS, base_local_planner::CarLikeTrajectoryPlannerROS, nav_core::BaseLocalPlanner)
+PLUGINLIB_DECLARE_CLASS(carlike_local_planner, CarLikeTrajectoryPlannerROS, carlike_local_planner::CarLikeTrajectoryPlannerROS, nav_core::BaseLocalPlanner)
 
-namespace base_local_planner {
+namespace carlike_local_planner {
 
   CarLikeTrajectoryPlannerROS::CarLikeTrajectoryPlannerROS() : world_model_(NULL), tc_(NULL), costmap_ros_(NULL), tf_(NULL), initialized_(false) {}
 
@@ -604,7 +604,7 @@ namespace base_local_planner {
       base_odom = base_odom_;
     }
 
-    return base_local_planner::isGoalReached(*tf_, global_plan_, *costmap_ros_, global_frame_, base_odom, 
+    return carlike_local_planner::isGoalReached(*tf_, global_plan_, *costmap_ros_, global_frame_, base_odom,
         rot_stopped_velocity_, trans_stopped_velocity_, xy_goal_tolerance_, yaw_goal_tolerance_);
   }
 };

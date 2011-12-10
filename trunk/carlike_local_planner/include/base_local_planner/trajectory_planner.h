@@ -55,7 +55,7 @@
 //we'll take in a path as a vector of poses
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Point.h>
-#include <base_local_planner/Position2DInt.h>
+#include <carlike_local_planner/Position2DInt.h>
 
 //for computing path distance
 #include <queue>
@@ -63,7 +63,7 @@
 //for some datatypes
 #include <tf/transform_datatypes.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class TrajectoryPlanner
    * @brief Computes control velocities for a robot given a costmap, a plan, and the robot's position in the world. 
@@ -229,7 +229,7 @@ namespace base_local_planner {
        * @param  fill If true: returns all cells in the footprint of the robot. If false: returns only the cells that make up the outline of the footprint.
        * @return The cells that make up either the outline or entire footprint of the robot depending on fill
        */
-      std::vector<base_local_planner::Position2DInt> getFootprintCells(double x_i, double y_i, double theta_i, bool fill);
+      std::vector<carlike_local_planner::Position2DInt> getFootprintCells(double x_i, double y_i, double theta_i, bool fill);
 
       /**
        * @brief  Use Bresenham's algorithm to trace a line between two points in a grid
@@ -239,13 +239,13 @@ namespace base_local_planner {
        * @param  y1 The y coordinate of the second point
        * @param  pts Will be filled with the cells that lie on the line in the grid
        */
-      void getLineCells(int x0, int x1, int y0, int y1, std::vector<base_local_planner::Position2DInt>& pts);
+      void getLineCells(int x0, int x1, int y0, int y1, std::vector<carlike_local_planner::Position2DInt>& pts);
 
       /**
        * @brief Fill the outline of a polygon, in this case the robot footprint, in a grid
        * @param footprint The list of cells making up the footprint in the grid, will be modified to include all cells inside the footprint
        */
-      void getFillCells(std::vector<base_local_planner::Position2DInt>& footprint);
+      void getFillCells(std::vector<carlike_local_planner::Position2DInt>& footprint);
 
       MapGrid map_; ///< @brief The local map grid where we propagate goal and path distance 
       const costmap_2d::Costmap2D& costmap_; ///< @brief Provides access to cost map information

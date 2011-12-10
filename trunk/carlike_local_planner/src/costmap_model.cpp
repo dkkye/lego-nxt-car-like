@@ -39,7 +39,7 @@
 using namespace std;
 using namespace costmap_2d;
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   CostmapModel::CostmapModel(const Costmap2D& ma) : costmap_(ma) {}
 
   double CostmapModel::footprintCost(const geometry_msgs::Point& position, const vector<geometry_msgs::Point>& footprint, 

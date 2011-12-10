@@ -41,7 +41,7 @@
 // For obstacle data access
 #include <costmap_2d/costmap_2d.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class CostmapModel
    * @brief A class that implements the WorldModel interface to provide grid

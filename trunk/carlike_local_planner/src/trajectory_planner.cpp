@@ -40,7 +40,7 @@
 using namespace std;
 using namespace costmap_2d;
 
-namespace base_local_planner{
+namespace carlike_local_planner{
   TrajectoryPlanner::TrajectoryPlanner(WorldModel& world_model, 
       const Costmap2D& costmap, 
       std::vector<geometry_msgs::Point> footprint_spec,
@@ -425,7 +425,7 @@ namespace base_local_planner{
     map_.resetPathDist();
 
     //temporarily remove obstacles that are within the footprint of the robot
-    vector<base_local_planner::Position2DInt> footprint_list = getFootprintCells(x, y, theta, true);
+    vector<carlike_local_planner::Position2DInt> footprint_list = getFootprintCells(x, y, theta, true);
 
     //mark cells within the initial footprint of the robot
     for(unsigned int i = 0; i < footprint_list.size(); ++i){
@@ -474,7 +474,7 @@ namespace base_local_planner{
     return footprint_cost;
   }
 
-  void TrajectoryPlanner::getLineCells(int x0, int x1, int y0, int y1, vector<base_local_planner::Position2DInt>& pts){
+  void TrajectoryPlanner::getLineCells(int x0, int x1, int y0, int y1, vector<carlike_local_planner::Position2DInt>& pts){
     //Bresenham Ray-Tracing
     int deltax = abs(x1 - x0);        // The difference between the x's
     int deltay = abs(y1 - y0);        // The difference between the y's
@@ -484,7 +484,7 @@ namespace base_local_planner{
     int xinc1, xinc2, yinc1, yinc2;
     int den, num, numadd, numpixels;
 
-    base_local_planner::Position2DInt pt;
+    carlike_local_planner::Position2DInt pt;
 
     if (x1 >= x0)                 // The x-values are increasing
     {
@@ -546,8 +546,8 @@ namespace base_local_planner{
   }
 
   //get the cellsof a footprint at a given position
-  vector<base_local_planner::Position2DInt> TrajectoryPlanner::getFootprintCells(double x_i, double y_i, double theta_i, bool fill){
-    vector<base_local_planner::Position2DInt> footprint_cells;
+  vector<carlike_local_planner::Position2DInt> TrajectoryPlanner::getFootprintCells(double x_i, double y_i, double theta_i, bool fill){
+    vector<carlike_local_planner::Position2DInt> footprint_cells;
 
     //if we have no footprint... do nothing
     if(footprint_spec_.size() <= 1){
@@ -603,9 +603,9 @@ namespace base_local_planner{
     return footprint_cells;
   }
 
-  void TrajectoryPlanner::getFillCells(vector<base_local_planner::Position2DInt>& footprint){
+  void TrajectoryPlanner::getFillCells(vector<carlike_local_planner::Position2DInt>& footprint){
     //quick bubble sort to sort pts by x
-    base_local_planner::Position2DInt swap, pt;
+    carlike_local_planner::Position2DInt swap, pt;
     unsigned int i = 0;
     while(i < footprint.size() - 1){
       if(footprint[i].x > footprint[i + 1].x){
@@ -620,8 +620,8 @@ namespace base_local_planner{
     }
 
     i = 0;
-    base_local_planner::Position2DInt min_pt;
-    base_local_planner::Position2DInt max_pt;
+    carlike_local_planner::Position2DInt min_pt;
+    carlike_local_planner::Position2DInt max_pt;
     unsigned int min_x = footprint[0].x;
     unsigned int max_x = footprint[footprint.size() -1].x;
     //walk through each column and mark cells inside the footprint

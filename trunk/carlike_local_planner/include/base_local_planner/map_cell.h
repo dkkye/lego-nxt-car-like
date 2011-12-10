@@ -36,7 +36,7 @@
 
 #include <base_local_planner/trajectory_inc.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class MapCell
    * @brief Stores path distance and goal distance information used for scoring trajectories

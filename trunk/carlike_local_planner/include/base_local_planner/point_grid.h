@@ -47,7 +47,7 @@
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class PointGrid
    * @brief A class that implements the WorldModel interface to provide

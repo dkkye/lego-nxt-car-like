@@ -3,19 +3,22 @@
 #define CARLIKE_LOCAL_PLANNER_MESSAGE_POSITION2DINT_H
 #include <string>
 #include <vector>
+#include <map>
 #include <ostream>
 #include "ros/serialization.h"
 #include "ros/builtin_message_traits.h"
 #include "ros/message_operations.h"
-#include "ros/message.h"
 #include "ros/time.h"
+
+#include "ros/macros.h"
+
+#include "ros/assert.h"
 
 
 namespace carlike_local_planner
 {
 template <class ContainerAllocator>
-struct Position2DInt_ : public ros::Message
-{
+struct Position2DInt_ {
   typedef Position2DInt_<ContainerAllocator> Type;
 
   Position2DInt_()
@@ -86,6 +89,7 @@ public:
 
   typedef boost::shared_ptr< ::carlike_local_planner::Position2DInt_<ContainerAllocator> > Ptr;
   typedef boost::shared_ptr< ::carlike_local_planner::Position2DInt_<ContainerAllocator>  const> ConstPtr;
+  boost::shared_ptr<std::map<std::string, std::string> > __connection_header;
 }; // struct Position2DInt
 typedef  ::carlike_local_planner::Position2DInt_<std::allocator<void> > Position2DInt;
 
@@ -105,6 +109,8 @@ namespace ros
 {
 namespace message_traits
 {
+template<class ContainerAllocator> struct IsMessage< ::carlike_local_planner::Position2DInt_<ContainerAllocator> > : public TrueType {};
+template<class ContainerAllocator> struct IsMessage< ::carlike_local_planner::Position2DInt_<ContainerAllocator>  const> : public TrueType {};
 template<class ContainerAllocator>
 struct MD5Sum< ::carlike_local_planner::Position2DInt_<ContainerAllocator> > {
   static const char* value() 

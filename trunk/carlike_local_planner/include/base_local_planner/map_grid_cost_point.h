@@ -36,7 +36,7 @@
 
 #include <pcl/ros/register_point_struct.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
     struct MapGridCostPoint {
         float x;
         float y;
@@ -49,7 +49,7 @@ namespace base_local_planner {
 }
 
 POINT_CLOUD_REGISTER_POINT_STRUCT(
-        base_local_planner::MapGridCostPoint,
+        carlike_local_planner::MapGridCostPoint,
         (float, x, x)
         (float, y, y)
         (float, z, z)

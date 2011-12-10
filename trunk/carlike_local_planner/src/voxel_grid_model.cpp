@@ -39,7 +39,7 @@
 using namespace std;
 using namespace costmap_2d;
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   VoxelGridModel::VoxelGridModel(double size_x, double size_y, double size_z, double xy_resolution, double z_resolution,
           double origin_x, double origin_y, double origin_z, double max_z, double obstacle_range) :
     obstacle_grid_(size_x, size_y, size_z), xy_resolution_(xy_resolution), z_resolution_(z_resolution), 

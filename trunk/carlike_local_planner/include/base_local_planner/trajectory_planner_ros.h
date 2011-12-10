@@ -67,7 +67,7 @@
 
 #include <nav_core/base_local_planner.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class TrajectoryPlannerROS
    * @brief A ROS wrapper for the trajectory controller that queries the param server to construct a controller
