@@ -54,7 +54,7 @@
 #include <costmap_2d/costmap_2d.h>
 #include <costmap_2d/costmap_2d_ros.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @brief  Compute the distance between two points
    * @param x1 The first x point 

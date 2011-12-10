@@ -42,7 +42,7 @@
 #include <geometry_msgs/Point.h>
 #include <base_local_planner/planar_laser_scan.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class WorldModel
    * @brief An interface the trajectory controller uses to interact with the

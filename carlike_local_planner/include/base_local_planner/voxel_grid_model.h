@@ -49,7 +49,7 @@
 //voxel grid stuff
 #include <voxel_grid/voxel_grid.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   /**
    * @class VoxelGridModel
    * @brief A class that implements the WorldModel interface to provide grid

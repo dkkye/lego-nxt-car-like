@@ -55,7 +55,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.environment</key>
-					<value>VERBOSE=1|CMAKE_NO_VERBOSE=1|</value>
+					<value>VERBOSE=1|ROS_ROOT=/opt/ros/electric/ros|ROS_PACKAGE_PATH=/home/alex/lego-nxt-car-like:/opt/ros/electric/stacks|PYTHONPATH=/opt/ros/electric/ros/core/roslib/src:|PATH=/opt/ros/electric/ros/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/lib/jvm/java-6-sun-1.6.0.26/bin:/home/alex/lejos_nxj/bin:/home/alex/lejos_nxj/projects/pcsamples/bin|</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableFullBuild</key>

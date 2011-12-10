@@ -48,9 +48,9 @@
 
 
 using namespace std;
-using namespace base_local_planner;
+using namespace carlike_local_planner;
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   class WavefrontMapAccessor : public costmap_2d::Costmap2D {
     public:
       WavefrontMapAccessor(MapGrid &map, double outer_radius) 

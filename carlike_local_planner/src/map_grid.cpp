@@ -35,7 +35,7 @@
 
 using namespace std;
 
-namespace base_local_planner{
+namespace carlike_local_planner{
 
   MapGrid::MapGrid()
     : size_x_(0), size_y_(0)

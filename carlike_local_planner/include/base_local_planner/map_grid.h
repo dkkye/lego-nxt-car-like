@@ -44,7 +44,7 @@
 #include <costmap_2d/costmap_2d.h>
 #include <geometry_msgs/PoseStamped.h>
 
-namespace base_local_planner{
+namespace carlike_local_planner{
   /**
    * @class MapGrid
    * @brief A grid of MapCell cells that is used to propagate path and goal distances for the trajectory controller.

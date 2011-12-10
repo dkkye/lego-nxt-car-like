@@ -40,7 +40,7 @@
 #include <base_local_planner/map_grid_cost_point.h>
 #include <pcl_ros/publisher.h>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
     class MapGridVisualizer {
         public:
             /**

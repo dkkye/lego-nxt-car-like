@@ -1,4 +1,4 @@
-(cl:defpackage base_local_planner-msg
+(cl:defpackage carlike_local_planner-msg
   (:use )
   (:export
    "<POSITION2DINT>"

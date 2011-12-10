@@ -34,7 +34,7 @@
 
 #include <base_local_planner/map_cell.h>
 
-namespace base_local_planner{
+namespace carlike_local_planner{
 
   MapCell::MapCell()
     : cx(0), cy(0), path_dist(DBL_MAX), goal_dist(DBL_MAX), occ_dist(0.0), occ_state(0), path_mark(false), goal_mark(false), within_robot(false)

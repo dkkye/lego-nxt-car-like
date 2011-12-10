@@ -72,7 +72,7 @@ void printPolygonPS(const vector<geometry_msgs::Point>& poly, double line_width)
 
 }
 
-namespace base_local_planner {
+namespace carlike_local_planner {
 
 PointGrid::PointGrid(double size_x, double size_y, double resolution, geometry_msgs::Point origin, double max_z, double obstacle_range, double min_seperation) :
   resolution_(resolution), origin_(origin), max_z_(max_z), sq_obstacle_range_(obstacle_range * obstacle_range), sq_min_separation_(min_seperation * min_seperation)
@@ -553,7 +553,7 @@ PointGrid::PointGrid(double size_x, double size_y, double resolution, geometry_m
 };
 
 
-using namespace base_local_planner;
+using namespace carlike_local_planner;
 
 int main(int argc, char** argv){
   geometry_msgs::Point origin;

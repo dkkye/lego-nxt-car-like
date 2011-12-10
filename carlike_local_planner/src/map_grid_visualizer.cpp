@@ -35,7 +35,7 @@
 #include <base_local_planner/map_cell.h>
 #include <vector>
 
-namespace base_local_planner {
+namespace carlike_local_planner {
   MapGridVisualizer::MapGridVisualizer() {}
 
 
