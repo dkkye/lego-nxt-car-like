@@ -116,11 +116,13 @@ namespace carlike_local_planner{
     num_steps = int(sim_time_ / sim_granularity_ + 0.5);
 
     //we at least want to take one step... even if we won't move, we want to score our current position
-    if(num_steps == 0)
-      num_steps = 1;
+    //if(num_steps == 0)
+      num_steps = 100;
 
     double dt = sim_time_ / num_steps;
     double time = 0.0;
+
+    ROS_DEBUG_NAMED("test","acerman_theta_samp = %f, num_steps = %d dt=%f sim_time=%f",acerman_theta_samp,num_steps, dt, sim_time_);
 
     //create a potential trajectory
     traj.resetPoints();
@@ -158,9 +160,13 @@ namespace carlike_local_planner{
 
       double cell_pdist = map_(cell_x, cell_y).path_dist;
       double cell_gdist = map_(cell_x, cell_y).goal_dist;
-
+      //ROS_DEBUG("Costs cell_x=%d cell_y=%d: occ_cost=%f footprint_cost=%f cell_cost=%f cell_pdist=%f cell_gdist=%f",cell_x, cell_y,occ_cost,footprint_cost,double(costmap_.getCost(cell_x, cell_y)), cell_pdist, cell_gdist);
       //update path and goal distances
-      if(time >= heading_scoring_timestep_ && time < heading_scoring_timestep_ + dt){
+      if(!heading_scoring_){
+        path_dist = cell_pdist;
+        goal_dist = cell_gdist;
+      }
+      else if(time >= heading_scoring_timestep_ && time < heading_scoring_timestep_ + dt){
         heading_diff = headingDiff(cell_x, cell_y, x_i, y_i, theta_i);
         //update path and goal distances
         path_dist = cell_pdist;
@@ -188,9 +194,9 @@ namespace carlike_local_planner{
 
       //the point is legal... add it to the trajectory
       traj.addPoint(x_i, y_i, theta_i);
-
+      //ROS_DEBUG("addPoint x_i=%f y_i=%f theta_i=%f",x_i, y_i, theta_i);
       //calculate new positions
-      double wsl = 0.2; //wheels base
+      double wsl = 0.45; //wheels base
       double linear_velocity = 0.1;
       double r = wsl * tan(3.141592654/2 - acerman_theta_samp); //radius
       double lin_distance = linear_velocity * dt;
@@ -198,17 +204,20 @@ namespace carlike_local_planner{
 
       theta_i += dtheta_i;
       x_i += lin_distance*cos(theta_i);
-      y_i += lin_distance*sin(theta_i);
+      y_i -= lin_distance*sin(theta_i);
 
     }
 
     //ROS_INFO("OccCost: %f, vx: %.2f, vy: %.2f, vtheta: %.2f", occ_cost, vx_samp, vy_samp, vtheta_samp);
     double cost = -1.0;
-    if(!heading_scoring_)
+    if(!heading_scoring_){
       cost = pdist_scale_ * path_dist + goal_dist * gdist_scale_ + occdist_scale_ * occ_cost;
-    else
+      ROS_DEBUG("!heading_scoring_");
+    }
+    else{
       cost = occdist_scale_ * occ_cost + pdist_scale_ * path_dist + 0.3 * heading_diff + goal_dist * gdist_scale_;
-
+    }
+    ROS_DEBUG("path_dist = %f goal_dist = %f occ_cost = %f",path_dist,goal_dist,occ_cost);
     traj.cost_ = cost;
   }
 
@@ -393,9 +402,10 @@ namespace carlike_local_planner{
     for(int i = 0; i < vtheta_samples_; ++i){
         //first sample the straight trajectory
         generateTrajectoryCarLike(x, y, theta, acerman_theta_samp, impossible_cost, *comp_traj);
-
+        ROS_INFO("Trajectory n=%d acerman_theta_samp=%f cost=%f",i,acerman_theta_samp,comp_traj->cost_);
         //if the new trajectory is better... let's take it
         if(comp_traj->cost_ >= 0 && (comp_traj->cost_ < best_traj->cost_ || best_traj->cost_ < 0)){
+        	ROS_INFO("Found better trajectory cost=%f", comp_traj->cost_);
           swap = best_traj;
           best_traj = comp_traj;
           comp_traj = swap;
@@ -403,6 +413,7 @@ namespace carlike_local_planner{
 
         acerman_theta_samp += dacer_theta;
       }
+    return *best_traj;
   }
   
   
@@ -438,7 +449,7 @@ namespace carlike_local_planner{
 
     //rollout trajectories and find the minimum cost one
     Trajectory best = createTrajectoriesCarLike(x, y, theta, 0, 0, 3.141592654/4);
-    ROS_DEBUG("Trajectories created");
+    ROS_INFO("Trajectories created Theta=%f cost=%f",best.thetav_,best.cost_);
 
 
     if(best.cost_ < 0){
