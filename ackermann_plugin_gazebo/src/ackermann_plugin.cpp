@@ -82,8 +82,8 @@ AckermannPlugin::AckermannPlugin(Entity *parent) :
   leftJointNameP = new ParamT<std::string> ("leftJoint", "", 1);
   rightJointNameP = new ParamT<std::string> ("rightJoint", "", 1);
   steerJointNameP = new ParamT<std::string> ("steerJoint", "", 1);
-  wheelSepWidthP = new ParamT<float> ("wheelSeparationWidth", 0.12, 1);
-  wheelSepLengthP = new ParamT<float> ("wheelSeparationLength", 0.3, 1);
+  wheelSepWidthP = new ParamT<float> ("wheelSeparationWidth", 0.16, 1);
+  wheelSepLengthP = new ParamT<float> ("wheelSeparationLength", 0.32, 1);
   wheelDiamP = new ParamT<float> ("wheelDiameter", 0.042, 1);
   driveTorqueP = new ParamT<float> ("driveTorque", 10.0, 1);
   steerTorqueP = new ParamT<float> ("steerTorque", 10.0, 1);
