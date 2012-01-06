@@ -53,8 +53,8 @@ int64 y
     try:
       _x = self
       buff.write(_struct_2q.pack(_x.x, _x.y))
-    except struct.error, se: self._check_types(se)
-    except TypeError, te: self._check_types(te)
+    except struct.error as se: self._check_types(se)
+    except TypeError as te: self._check_types(te)
 
   def deserialize(self, str):
     """
@@ -69,7 +69,7 @@ int64 y
       end += 16
       (_x.x, _x.y,) = _struct_2q.unpack(str[start:end])
       return self
-    except struct.error, e:
+    except struct.error as e:
       raise roslib.message.DeserializationError(e) #most likely buffer underfill
 
 
@@ -84,8 +84,8 @@ int64 y
     try:
       _x = self
       buff.write(_struct_2q.pack(_x.x, _x.y))
-    except struct.error, se: self._check_types(se)
-    except TypeError, te: self._check_types(te)
+    except struct.error as se: self._check_types(se)
+    except TypeError as te: self._check_types(te)
 
   def deserialize_numpy(self, str, numpy):
     """
@@ -102,7 +102,7 @@ int64 y
       end += 16
       (_x.x, _x.y,) = _struct_2q.unpack(str[start:end])
       return self
-    except struct.error, e:
+    except struct.error as e:
       raise roslib.message.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = roslib.message.struct_I

@@ -145,7 +145,7 @@ namespace carlike_local_planner {
       private_nh.param("sim_granularity", sim_granularity, 0.025);
       private_nh.param("angular_sim_granularity", angular_sim_granularity, sim_granularity);
       private_nh.param("vx_samples", vx_samples, 3);
-      private_nh.param("vtheta_samples", vtheta_samples, 20);
+      private_nh.param("vtheta_samples", vtheta_samples, 5);
 
       private_nh.param("path_distance_bias", pdist_scale, 0.6);
       private_nh.param("goal_distance_bias", gdist_scale, 0.8);
@@ -473,9 +473,9 @@ namespace carlike_local_planner {
     }
 
     tc_->updatePlan(transformed_plan);
-    double accerman_theta;
+    double accerman_theta, lin_vel;
     //compute what trajectory to drive along
-    Trajectory path = tc_->findBestPath(global_pose, robot_vel, accerman_theta);
+    Trajectory path = tc_->findBestPath(global_pose, robot_vel, accerman_theta, lin_vel);
 
     map_viz_.publishCostCloud();
     /* For timing uncomment
@@ -494,9 +494,10 @@ namespace carlike_local_planner {
 
     cmd_vel.angular.z = yaw;
     */
-    cmd_vel.linear.x = 0.1;
-    cmd_vel.angular.z = -accerman_theta;
-    ROS_INFO("Accerman theta: %f",-accerman_theta);
+
+    cmd_vel.linear.x = lin_vel;
+    cmd_vel.angular.z = accerman_theta;
+    ROS_INFO("Accerman theta: %f",accerman_theta);
     
     //if we cannot move... tell someone
     if(path.cost_ < 0){
@@ -523,7 +524,7 @@ namespace carlike_local_planner {
     return true;
   }
 
-  bool CarLikeTrajectoryPlannerROS::checkTrajectory(double  acerman_theta_samp, bool update_map){
+  bool CarLikeTrajectoryPlannerROS::checkTrajectory(double  acerman_theta_samp, double lin_vel, bool update_map){
     tf::Stamped<tf::Pose> global_pose;
     if(costmap_ros_->getRobotPose(global_pose)){
       if(update_map){
@@ -549,7 +550,7 @@ namespace carlike_local_planner {
         base_odom = base_odom_;
       }
 
-      return tc_->checkTrajectory(global_pose.getOrigin().x(), global_pose.getOrigin().y(), tf::getYaw(global_pose.getRotation()),acerman_theta_samp);
+      return tc_->checkTrajectory(global_pose.getOrigin().x(), global_pose.getOrigin().y(), tf::getYaw(global_pose.getRotation()),acerman_theta_samp, lin_vel);
 
     }
     ROS_WARN("Failed to get the pose of the robot. No trajectories will pass as legal in this case.");
@@ -557,7 +558,7 @@ namespace carlike_local_planner {
   }
 
 
-  double CarLikeTrajectoryPlannerROS::scoreTrajectory(double acerman_theta_samp, bool update_map){
+  double CarLikeTrajectoryPlannerROS::scoreTrajectory(double acerman_theta_samp, double lin_vel, bool update_map){
     // Copy of checkTrajectory that returns a score instead of True / False
     tf::Stamped<tf::Pose> global_pose;
     if(costmap_ros_->getRobotPose(global_pose)){
@@ -584,7 +585,7 @@ namespace carlike_local_planner {
         base_odom = base_odom_;
       }
 
-      return tc_->scoreTrajectory(global_pose.getOrigin().x(), global_pose.getOrigin().y(), tf::getYaw(global_pose.getRotation()), acerman_theta_samp);
+      return tc_->scoreTrajectory(global_pose.getOrigin().x(), global_pose.getOrigin().y(), tf::getYaw(global_pose.getRotation()), acerman_theta_samp, lin_vel);
 
     }
     ROS_WARN("Failed to get the pose of the robot. No trajectories will pass as legal in this case.");

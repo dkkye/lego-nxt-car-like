@@ -57,7 +57,7 @@ namespace carlike_local_planner {
        */
       Trajectory(double xv, double yv, double thetav, unsigned int num_pts);
 
-      double xv_, yv_, thetav_; ///< @brief The x, y, and theta velocities of the trajectory
+      double xv_, yv_, thetav_, lin_vel_; ///< @brief The x, y, and theta velocities of the trajectory
 
       double cost_; ///< @brief The cost/score of the trajectory
 
