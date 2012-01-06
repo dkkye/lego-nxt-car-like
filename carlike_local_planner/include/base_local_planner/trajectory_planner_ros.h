@@ -133,7 +133,7 @@ namespace carlike_local_planner {
        * a short period of time
        * @return True if the trajectory is legal, false otherwise
        */
-      bool checkTrajectory(double  acerman_theta_samp, bool update_map = true);
+      bool checkTrajectory(double  acerman_theta_samp, double lin_vel, bool update_map = true);
 
       /**
        * @brief  Generate and score a single trajectory
@@ -146,7 +146,7 @@ namespace carlike_local_planner {
        * a short period of time
        * @return score of trajectory (double)
        */
-      double scoreTrajectory(double  acerman_theta_samp, bool update_map = true);
+      double scoreTrajectory(double  acerman_theta_samp, double lin_vel, bool update_map = true);
 
     private:
       /**

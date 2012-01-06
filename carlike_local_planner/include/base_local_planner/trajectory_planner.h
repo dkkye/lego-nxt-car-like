@@ -139,7 +139,7 @@ namespace carlike_local_planner {
        * @return The selected path or trajectory
        */
       Trajectory findBestPath(tf::Stamped<tf::Pose> global_pose, tf::Stamped<tf::Pose> global_vel,
-          double& accerman_theta);
+          double& accerman_theta, double& lin_vel);
 
       /**
        * @brief  Update the plan that the controller is following
@@ -163,7 +163,7 @@ namespace carlike_local_planner {
        * @param acerman_theta_samp The accerman theta used to seed the trajectory
        * @return True if the trajectory is legal, false otherwise
        */
-      bool checkTrajectory(double x, double y, double theta, double  acerman_theta_samp);
+      bool checkTrajectory(double x, double y, double theta, double  acerman_theta_samp, double lin_vel);
 
       /**
        * @brief  Generate and score a single trajectory
@@ -173,7 +173,7 @@ namespace carlike_local_planner {
        * @param acerman_theta_samp The accerman theta used to seed the trajectory
        * @return The score (as double)
        */
-      double scoreTrajectory(double x, double y, double theta, double  acerman_theta_samp);
+      double scoreTrajectory(double x, double y, double theta, double  acerman_theta_samp, double lin_vel);
 
       /**
        * @brief Compute the components and total cost for a map grid cell
@@ -197,8 +197,7 @@ namespace carlike_local_planner {
        * @param acc_linear The linear acceleration limit of the robot
        * @return 
        */
-      Trajectory createTrajectoriesCarLike(double x, double y, double theta, 
-      double acerman_theta, double acc_linear, double acerman_theta_limit);
+      Trajectory createTrajectoriesCarLike(double x, double y, double theta);
       
       /**
        * @brief  Generate and score a single trajectory
@@ -210,7 +209,7 @@ namespace carlike_local_planner {
        * @param traj Will be set to the generated trajectory with its associated score
        */
       void generateTrajectoryCarLike(double x, double y, double theta,
-    		  double acerman_theta_samp, double impossible_cost, Trajectory& traj);
+    		  double acerman_theta_samp, double vel_samp, double impossible_cost, Trajectory& traj);
 
       /**
        * @brief  Checks the legality of the robot footprint at a position and orientation using the world model
@@ -301,8 +300,10 @@ namespace carlike_local_planner {
 
       double stop_time_buffer_; ///< @brief How long before hitting something we're going to enforce that the robot stop
       double sim_period_; ///< @brief The number of seconds to use to compute max/min vels for dwa
-
-
+      double last_ackerman_theta_;///< @brief Used to calculate new ackerman theta
+      double limit_delta_theta_;///< @brief The limit changing of ackerman theta in one time
+      double acerman_theta_limit_;///< @brief The limit of ackerman theta
+      double vel_samples_; ///< @brief The number of samples we'll take in the linear velocity
       /**
        * @brief  Compute x position based on velocity
        * @param  xi The current x position
