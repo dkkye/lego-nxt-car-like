@@ -18,6 +18,11 @@
                 -model robot_description"
           respawn="false" output="screen" />
 	  
+  <param name="box_description" textfile="$(find car_like_simulation)/media/box.urdf" />
+
+  <!-- push box_description to factory and spawn robot in gazebo -->
+  <node name="spawn_table" pkg="gazebo" type="spawn_model" args="-urdf -param box_description -z 0.3 -model box_model" respawn="false" output="screen" />	  
+	  
   <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen" >
         <param name="publish_frequency" type="double" value="50.0" />
        <param name="tf_prefix" type="string" value="" />
@@ -48,6 +53,7 @@
   <node pkg="nxt_steering_control" type="cmdvel_to_cardrive.py" name="cmdvel_to_cardrive" output="screen" respawn="true">
   </node>
   
+  <!--
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
         <remap from="scan" to="base_scan/scan" />
         <param name="base_frame" value="base_footprint" />
@@ -75,13 +81,17 @@
         <param name="ymin" value="-10.0" />
         <param name="xmax" value="10.0" />
         <param name="ymax" value="10.0" />
-        <param name="delta" value="0.025"/>
+        <param name="delta" value="0.01"/>
         <param name="llsamplerange" value="0.01"/>
         <param name="llsamplestep" value="0.01"/>
         <param name="lasamplerange" value="0.005"/>
         <param name="lasamplestep" value="0.005"/>
     </node>
-  
+   -->
+   <node name="map_node" pkg="map_server" type="map_server" 
+          args="$(find car_like_simulation)/media/empty_map.yaml" respawn="true" output="screen" />
+	  
+   <include file="$(find erratic_navigation)/navigation_global/amcl_node.launch" />
   <!-- for moving --> 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
         <remap from="odom" to="odom" />

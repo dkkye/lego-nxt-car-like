@@ -15,7 +15,7 @@ yaw_goal_tolerance: 0.05
 
 # Forward Simulation Parameters
 sim_time: 1.7
-sim_granularity: 0.025
+sim_granularity: 0.0025
 vx_samples: 3
 vtheta_samples: 20
 
