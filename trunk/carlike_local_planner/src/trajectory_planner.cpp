@@ -109,7 +109,7 @@ namespace carlike_local_planner{
   }
 
   //create and score a trajectory given the current pose of the robot and selected velocities
-  void TrajectoryPlanner::generateTrajectoryCarLike(double x, double y, double theta, double acerman_theta_samp, double vel_samp, double impossible_cost, Trajectory& traj){
+  void TrajectoryPlanner::generateTrajectoryCarLike(double x, double y, double theta, double goal_th, double acerman_theta_samp, double vel_samp, double impossible_cost, Trajectory& traj){
     double x_i = x;
     double y_i = y;
     double theta_i = theta;
@@ -120,7 +120,7 @@ namespace carlike_local_planner{
     num_steps = int(sim_time_ / sim_granularity_ + 0.5);
 
     //we at least want to take one step... even if we won't move, we want to score our current position
-    num_steps = 5;
+    num_steps = 20;
 
     double dt = sim_time_ / num_steps;
     double time = 0.0;
@@ -138,6 +138,9 @@ namespace carlike_local_planner{
     double goal_dist = 0.0;
     double occ_cost = 0.0;
     double heading_diff = 0.0;
+    double ang_diff;
+    double angdist_scale = 10; // it need removing to properties
+    double ang_cost;
 
     for(int i = 0; i < num_steps; ++i){
       //get map coordinates of a point
@@ -210,6 +213,17 @@ namespace carlike_local_planner{
       x_i += lin_distance*cos(theta_i);
       y_i += lin_distance*sin(theta_i);
 
+      ang_diff = abs(angles::shortest_angular_distance(theta_i, goal_th));
+      angdist_scale = 100; // it need removing to properties
+      ang_cost = ang_diff*angdist_scale/(goal_dist+1);
+
+      //break from cycle if point is goal
+      if (goal_dist>=0 && goal_dist<5){
+    	  ROS_INFO("Break from cycle");
+    	  break;
+      }
+
+
       //ROS_INFO("addPoint x_i=%f y_i=%f theta_i=%f r=%f lin_dstance=%f",x_i, y_i, theta_i, r, lin_distance);
     }
 
@@ -226,8 +240,8 @@ namespace carlike_local_planner{
     vel_cost = 0;
     if (vel_samp<0){
     	vel_cost = 0.2*cost;}
-    ROS_INFO("path_dist = %f goal_dist = %f occ_cost = %f vel_cost=%f",path_dist,goal_dist,occ_cost, vel_cost);
-    traj.cost_ = cost+vel_cost;
+    ROS_INFO("path_dist = %f goal_dist = %f occ_cost = %f vel_cost=%f ang_cost=%f",path_dist,goal_dist,occ_cost, vel_cost,ang_cost);
+    traj.cost_ = cost+vel_cost+ang_cost;
   }
 
 
@@ -382,7 +396,7 @@ namespace carlike_local_planner{
   double TrajectoryPlanner::scoreTrajectory(double x, double y, double theta, double  acerman_theta_samp, double lin_vel){
     Trajectory t; 
     double impossible_cost = map_.map_.size();
-    generateTrajectoryCarLike(x, y, theta, acerman_theta_samp, lin_vel, impossible_cost, t);
+    generateTrajectoryCarLike(x, y, theta, 0, acerman_theta_samp, lin_vel, impossible_cost, t);
 
     // return the cost.
     return double( t.cost_ );
@@ -391,7 +405,7 @@ namespace carlike_local_planner{
 
 
   //create the trajectories we wish to score
-  Trajectory TrajectoryPlanner::createTrajectoriesCarLike(double x, double y, double theta){
+  Trajectory TrajectoryPlanner::createTrajectoriesCarLike(double x, double y, double theta,  double goal_th){
     
     //keep track of the best trajectory seen so far
     Trajectory* best_traj = &traj_one;
@@ -412,7 +426,7 @@ namespace carlike_local_planner{
 		for(int i = 0; i < vtheta_samples_; ++i){
 			if (acerman_theta_samp>acerman_theta_limit_)
 				break;
-			generateTrajectoryCarLike(x, y, theta, acerman_theta_samp, vel_sample, impossible_cost, *comp_traj);
+			generateTrajectoryCarLike(x, y, theta, goal_th, acerman_theta_samp, vel_sample, impossible_cost, *comp_traj);
 			//ROS_INFO("Trajectory n=%d acerman_theta_samp=%f cost=%f",i,acerman_theta_samp,comp_traj->cost_);
 			//if the new trajectory is better... let's take it
 			if(comp_traj->cost_ >= 0 && (comp_traj->cost_ < best_traj->cost_ || best_traj->cost_ < 0)){
@@ -431,7 +445,7 @@ namespace carlike_local_planner{
   
   
   //given the current state of the robot, find a good trajectory
-  Trajectory TrajectoryPlanner::findBestPath(tf::Stamped<tf::Pose> global_pose, tf::Stamped<tf::Pose> global_vel, 
+  Trajectory TrajectoryPlanner::findBestPath(tf::Stamped<tf::Pose> global_pose, tf::Stamped<tf::Pose> global_vel, double goal_th,
       double& accerman_theta, double& lin_vel){
 
     double yaw = tf::getYaw(global_pose.getRotation());
@@ -461,7 +475,7 @@ namespace carlike_local_planner{
     ROS_DEBUG("Path/Goal distance computed");
 
     //rollout trajectories and find the minimum cost one
-    Trajectory best = createTrajectoriesCarLike(x, y, theta);
+    Trajectory best = createTrajectoriesCarLike(x, y, theta, goal_th);
 
     ROS_INFO("Trajectories created Vel=%f Theta=%f cost=%f",best.lin_vel_,best.thetav_,best.cost_);
 

@@ -141,7 +141,7 @@ namespace carlike_local_planner {
       }
       ROS_INFO("Sim period is set to %.2f", sim_period_);
 
-      private_nh.param("sim_time", sim_time, 1.0);
+      private_nh.param("sim_time", sim_time, 5.0);
       private_nh.param("sim_granularity", sim_granularity, 0.025);
       private_nh.param("angular_sim_granularity", angular_sim_granularity, sim_granularity);
       private_nh.param("vx_samples", vx_samples, 3);
@@ -475,7 +475,7 @@ namespace carlike_local_planner {
     tc_->updatePlan(transformed_plan);
     double accerman_theta, lin_vel;
     //compute what trajectory to drive along
-    Trajectory path = tc_->findBestPath(global_pose, robot_vel, accerman_theta, lin_vel);
+    Trajectory path = tc_->findBestPath(global_pose, robot_vel, goal_th, accerman_theta, lin_vel);
 
     map_viz_.publishCostCloud();
     /* For timing uncomment
@@ -525,7 +525,8 @@ namespace carlike_local_planner {
   }
 
   bool CarLikeTrajectoryPlannerROS::checkTrajectory(double  acerman_theta_samp, double lin_vel, bool update_map){
-    tf::Stamped<tf::Pose> global_pose;
+    ROS_INFO("Does it need?!!!");
+	tf::Stamped<tf::Pose> global_pose;
     if(costmap_ros_->getRobotPose(global_pose)){
       if(update_map){
         //we also want to clear the robot footprint from the costmap we're using
