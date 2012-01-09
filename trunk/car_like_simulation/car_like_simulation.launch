@@ -21,8 +21,11 @@
   <param name="box_description" textfile="$(find car_like_simulation)/media/box.urdf" />
 
   <!-- push box_description to factory and spawn robot in gazebo -->
-  <node name="spawn_table" pkg="gazebo" type="spawn_model" args="-urdf -param box_description -z 0.3 -model box_model" respawn="false" output="screen" />	  
-	  
+  <node name="spawn_box1" pkg="gazebo" type="spawn_model" args="-urdf -param box_description -z 0.3 -model box_model1" respawn="false" output="screen" />	  
+
+  <!-- push box_description to factory and spawn robot in gazebo -->
+  <node name="spawn_box2" pkg="gazebo" type="spawn_model" args="-urdf -param box_description -x 1.5 -z 0.3 -model box_model2" respawn="false" output="screen" />  
+  
   <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen" >
         <param name="publish_frequency" type="double" value="50.0" />
        <param name="tf_prefix" type="string" value="" />
