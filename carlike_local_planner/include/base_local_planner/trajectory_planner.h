@@ -138,7 +138,7 @@ namespace carlike_local_planner {
        * @param drive_velocities Will be set to velocities to send to the robot base
        * @return The selected path or trajectory
        */
-      Trajectory findBestPath(tf::Stamped<tf::Pose> global_pose, tf::Stamped<tf::Pose> global_vel,
+      Trajectory findBestPath(tf::Stamped<tf::Pose> global_pose, tf::Stamped<tf::Pose> global_vel, double goal_th,
           double& accerman_theta, double& lin_vel);
 
       /**
@@ -197,7 +197,7 @@ namespace carlike_local_planner {
        * @param acc_linear The linear acceleration limit of the robot
        * @return 
        */
-      Trajectory createTrajectoriesCarLike(double x, double y, double theta);
+      Trajectory createTrajectoriesCarLike(double x, double y, double theta, double goal_th);
       
       /**
        * @brief  Generate and score a single trajectory
@@ -208,7 +208,7 @@ namespace carlike_local_planner {
        * @param impossible_cost The cost value of a cell in the local map grid that is considered impassable
        * @param traj Will be set to the generated trajectory with its associated score
        */
-      void generateTrajectoryCarLike(double x, double y, double theta,
+      void generateTrajectoryCarLike(double x, double y, double theta, double goal_th,
     		  double acerman_theta_samp, double vel_samp, double impossible_cost, Trajectory& traj);
 
       /**
