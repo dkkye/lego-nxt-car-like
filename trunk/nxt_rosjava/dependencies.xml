@@ -3,13 +3,13 @@
       xmlns:ac="antlib:net.sf.antcontrib"
 >
 
-  <path id="maven-ant-tasks.classpath" path="/opt/ros/diamondback/stacks/rosjava_core/rosjava_bootstrap/scripts/maven-ant-tasks-2.1.3.jar" />
+  <path id="maven-ant-tasks.classpath" path="/opt/ros/electric/ros/android/rosjava_core/rosjava_bootstrap/scripts/maven-ant-tasks-2.1.3.jar" />
   <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
            uri="antlib:org.apache.maven.artifact.ant"
            classpathref="maven-ant-tasks.classpath" />
   <typedef resource="net/sf/antcontrib/antlib.xml"
            uri="antlib:net.sf.antcontrib"
-           classpath="/opt/ros/diamondback/stacks/rosjava_core/rosjava_bootstrap/scripts/ant-contrib-1.0b3.jar"/>
+           classpath="/opt/ros/electric/ros/android/rosjava_core/rosjava_bootstrap/scripts/ant-contrib-1.0b3.jar"/>
 
   <artifact:dependencies filesetId="dependency.osgi">
     <artifact:remoteRepository id="org.ros.release" url="http://robotbrains.hideho.org/nexus/content/groups/ros-public" />
@@ -30,6 +30,7 @@
     <artifact:dependency groupId="com.google.guava" artifactId="org.ros.rosjava.guava" version="r07" />
     <artifact:dependency groupId="org.jboss.netty" artifactId="netty" version="3.2.4.Final" />
     <artifact:dependency groupId="org.apache.commons" artifactId="com.springsource.org.apache.commons.logging" version="1.1.1" />
+    <artifact:dependency groupId="org.apache.commons" artifactId="com.springsource.org.apache.commons.net" version="2.0.0" />
   </artifact:dependencies>
   <artifact:dependencies filesetId="dependency.fileset.test">
     <artifact:remoteRepository id="org.ros.release" url="http://robotbrains.hideho.org/nexus/content/groups/ros-public" />
@@ -40,6 +41,7 @@
     <artifact:dependency groupId="com.google.guava" artifactId="org.ros.rosjava.guava" version="r07" />
     <artifact:dependency groupId="org.jboss.netty" artifactId="netty" version="3.2.4.Final" />
     <artifact:dependency groupId="org.apache.commons" artifactId="com.springsource.org.apache.commons.logging" version="1.1.1" />
+    <artifact:dependency groupId="org.apache.commons" artifactId="com.springsource.org.apache.commons.net" version="2.0.0" />
   </artifact:dependencies>
   <artifact:dependencies filesetId="dependency.fileset.runtime">
     <artifact:remoteRepository id="org.ros.release" url="http://robotbrains.hideho.org/nexus/content/groups/ros-public" />
@@ -50,6 +52,7 @@
     <artifact:dependency groupId="com.google.guava" artifactId="org.ros.rosjava.guava" version="r07" />
     <artifact:dependency groupId="org.jboss.netty" artifactId="netty" version="3.2.4.Final" />
     <artifact:dependency groupId="org.apache.commons" artifactId="com.springsource.org.apache.commons.logging" version="1.1.1" />
+    <artifact:dependency groupId="org.apache.commons" artifactId="com.springsource.org.apache.commons.net" version="2.0.0" />
   </artifact:dependencies>
 
 
