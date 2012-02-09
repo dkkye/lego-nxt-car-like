@@ -17,15 +17,15 @@
 package org.ros.nxt_rosjava;
 
 import org.apache.commons.logging.Log;
+import org.ros.concurrent.CancellableLoop;
 import org.ros.message.MessageListener;
-import org.ros.node.DefaultNodeFactory;
 import org.ros.node.Node;
-import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMain;
 import lejos.nxt.*;
 import lejos.nxt.remote.RemoteMotor;
 
 import org.ros.node.topic.Publisher;
+import org.ros.node.topic.Subscriber;
 import org.ros.node.parameter.ParameterTree;
 import org.ros.namespace.GraphName;
 import org.ros.namespace.NameResolver;
@@ -140,45 +140,47 @@ class MotorNXT extends Device {
 		}
 		
 	    publisher = node.newPublisher("joint_state", "sensor_msgs/JointState");
-	    node.newSubscriber("joint_command", "nxt_rosjava_msgs/JointCommand",
-	              new MessageListener<org.ros.message.nxt_rosjava_msgs.JointCommand>() {
-	                @Override
-	                public void onNewMessage(org.ros.message.nxt_rosjava_msgs.JointCommand message) {
-	                	if (message.name.contains(name)){
-	                		if (message.type.contains("effort")){
-			                	double power = message.effort / POWER_TO_NM;
-			                    if (power > POWER_MAX)
-			                    	power = POWER_MAX;
-			                    else if (power < -POWER_MAX)
-			                    	power = -POWER_MAX;
-			                	power = power>0 ? power : -power; 
-			                	motor.setPower((int)power);
-			                	if (message.effort>0){
-			                		motor.forward();
-			                	}else{
-			                		motor.backward();
-			                	}
-		                	}
-		                	else if (message.type.contains("speed")){
-			                	double speed = message.speed>0 ? message.speed : -message.speed; 
-			                	motor.setSpeed((int)speed);
-			                	if (message.speed>0){
-			                		motor.forward();
-			                	}else{
-			                		motor.backward();
-			                	}
-		                	}
-		                	else if (message.type.contains("on_angle")){
-		                		motor.rotate((int) message.angle, true); 
-		                	}
-		                	else if (message.type.contains("to_angle")){
-		                		motor.setSpeed((int)message.speed);
-		                		motor.rotateTo((int) message.angle, true); 
-		                	}	
+	    Subscriber<org.ros.message.nxt_rosjava_msgs.JointCommand> subscriber =
+	            node.newSubscriber("joint_command", "nxt_rosjava_msgs/JointCommand");
+	    
+	    subscriber.addMessageListener(new MessageListener<org.ros.message.nxt_rosjava_msgs.JointCommand>() {
+	        @Override
+            public void onNewMessage(org.ros.message.nxt_rosjava_msgs.JointCommand message) {
+            	if (message.name.contains(name)){
+            		if (message.type.contains("effort")){
+	                	double power = message.effort / POWER_TO_NM;
+	                    if (power > POWER_MAX)
+	                    	power = POWER_MAX;
+	                    else if (power < -POWER_MAX)
+	                    	power = -POWER_MAX;
+	                	power = power>0 ? power : -power; 
+	                	motor.setPower((int)power);
+	                	if (message.effort>0){
+	                		motor.forward();
+	                	}else{
+	                		motor.backward();
 	                	}
-	                	
-	                }
-	              });
+                	}
+                	else if (message.type.contains("speed")){
+	                	double speed = message.speed>0 ? message.speed : -message.speed; 
+	                	motor.setSpeed((int)speed);
+	                	if (message.speed>0){
+	                		motor.forward();
+	                	}else{
+	                		motor.backward();
+	                	}
+                	}
+                	else if (message.type.contains("on_angle")){
+                		motor.rotate((int) message.angle, true); 
+                	}
+                	else if (message.type.contains("to_angle")){
+                		motor.setSpeed((int)message.speed);
+                		motor.rotateTo((int) message.angle, true); 
+                	}	
+            	}
+            	
+            }
+	      });
 	}
 	
 	
@@ -204,42 +206,55 @@ class MotorNXT extends Device {
 
 public class Listener implements NodeMain {
 
-  private Node node;
-  ArrayList<Device> lst_devices;
+  private ArrayList<Device> lst_devices;
 
   @Override
-  public void main(NodeConfiguration configuration) {
-    try {
-      node = new DefaultNodeFactory().newNode("listener", configuration);
-      final Log log = node.getLog();
-      ParameterTree param = node.newParameterTree();
-      GraphName paramNamespace = new GraphName(param.getString("parameter_namespace"));
-      NameResolver resolver = node.getResolver().createResolver(paramNamespace);
-      Map setttings_map = param.getMap(resolver.resolve("setttings"));
-      Object[] list = param.getList(resolver.resolve("list")).toArray();
-      lst_devices = new ArrayList<Device>();
-      for (int i = 0; i < list.length; i++) { 
-    	  String type = (String) ((Map) setttings_map.get(list[i])).get("type");
-    	  String name_dev = (String) ((Map) setttings_map.get(list[i])).get("name");
-    	  String frame_id = (String) ((Map) setttings_map.get(list[i])).get("frame_id");
-    	  double tmp_port = (Double) ((Map) setttings_map.get(list[i])).get("port");
-    	  int port = (int) tmp_port;
-    	  double desired_frequency = (Double) ((Map) setttings_map.get(list[i])).get("desired_frequency");
-    	  log.info("Device: " + list[i] + " type: " + type + " frequency: "+desired_frequency);
-    	  if (type.contains("ultrasonic")){
-    		  UltraSonicSensorNXT dev = new UltraSonicSensorNXT(port, desired_frequency, node, name_dev, frame_id);
-    		  lst_devices.add(dev);  
-    	  }
-    	  if (type.contains("motor")){
-    		  MotorNXT dev = new MotorNXT(port, (int)desired_frequency, node, name_dev);
-    		  lst_devices.add(dev);  
-    	  }
-    	  if (type.contains("touch")){
-    		  TouchSensorNXT dev = new TouchSensorNXT(port, (int)desired_frequency, node, name_dev, frame_id);
-    		  lst_devices.add(dev);  
-    	  }
+  public GraphName getDefaultNodeName() {
+    return new GraphName("nxt_rosjava/Listener");
+  }
+
+  @Override
+  public void onStart(final Node node) {
+	  final Log log = node.getLog();
+	  ParameterTree param = node.newParameterTree();
+	  GraphName paramNamespace = new GraphName(param.getString("parameter_namespace"));
+	  NameResolver resolver = node.getResolver().newChild(paramNamespace);
+	  Map setttings_map = param.getMap(resolver.resolve("setttings"));
+	  Object[] list = param.getList(resolver.resolve("list")).toArray();
+	  lst_devices = new ArrayList<Device>();
+	  for (int i = 0; i < list.length; i++) { 
+		  String type = (String) ((Map) setttings_map.get(list[i])).get("type");
+		  String name_dev = (String) ((Map) setttings_map.get(list[i])).get("name");
+		  String frame_id = (String) ((Map) setttings_map.get(list[i])).get("frame_id");
+		  double tmp_port = (Double) ((Map) setttings_map.get(list[i])).get("port");
+		  int port = (int) tmp_port;
+		  double desired_frequency = (Double) ((Map) setttings_map.get(list[i])).get("desired_frequency");
+		  log.info("Device: " + list[i] + " type: " + type + " frequency: "+desired_frequency);
+		  if (type.contains("ultrasonic")){
+			  UltraSonicSensorNXT dev = new UltraSonicSensorNXT(port, desired_frequency, node, name_dev, frame_id);
+			  lst_devices.add(dev);  
+		  }
+		  if (type.contains("motor")){
+			  MotorNXT dev = new MotorNXT(port, (int)desired_frequency, node, name_dev);
+			  lst_devices.add(dev);  
+		  }
+		  if (type.contains("touch")){
+			  TouchSensorNXT dev = new TouchSensorNXT(port, (int)desired_frequency, node, name_dev, frame_id);
+			  lst_devices.add(dev);  
+		  }
+	  }
+    // This CancellableLoop will be canceled automatically when the Node shuts
+    // down.
+    node.executeCancellableLoop(new CancellableLoop() {
+      private int sequenceNumber;
+
+      @Override
+      protected void setup() {
+        sequenceNumber = 0;
       }
-      while (true) {
+
+      @Override
+      protected void loop() throws InterruptedException {
           for(int i = 0; i<lst_devices.size(); i++) {
         	  Device curDevice = lst_devices.get(i);
         	  //log.info("Check device:"+curDevice.name);
@@ -248,21 +263,17 @@ public class Listener implements NodeMain {
         		  curDevice.do_trigger();
         	  }
           }
-          
           Thread.sleep(10);
-        }
-    } catch (Exception e) {
-      if (node != null) {
-        node.getLog().fatal(e);
-      } else {
-        e.printStackTrace();
       }
-    }
+    });
+  }  
+  
+  @Override
+  public void onShutdown(Node node) {
   }
 
   @Override
-  public void shutdown() {
-    node.shutdown();
+  public void onShutdownComplete(Node node) {
   }
-
+  
 }
