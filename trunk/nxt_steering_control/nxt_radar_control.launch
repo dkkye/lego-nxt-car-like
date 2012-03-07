@@ -1,15 +1,19 @@
 <launch>
+  <rosparam command="load" file="$(find nxt_rosjava)/robot.yaml" />  
+
   <param name="robot_description" textfile="$(find nxt_steering_control)/robot.urdf"/>
   
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
     <param name="publish_frequency" value="100.0"/>
   </node>
  
-  
   <node pkg="nxt_steering_control" type="nxt_radar_control.py" name="nxt_radar_control" output="screen" respawn="true">
   </node>
   
   <node pkg="nxt_steering_control" type="encoder_to_odom.py" name="encoder_to_odom" output="screen" respawn="true">
+  </node>
+
+  <node pkg="nxt_steering_control" type="nxt_steering_control.py" name="nxt_steering_control" output="screen" respawn="true">
   </node>
 
   <!-- fixed transform -->
@@ -27,7 +31,7 @@
     <rosparam file="$(find nxt_steering_control)/nxtcar_costmap.yaml" command="load" ns="costmap" />
   </node>
   
-  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+  <!--<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
         <remap from="scan" to="base_scan" />
         <param name="base_frame" value="base_footprint" />
         <param name="odom_frame" value="odom_combined"/>
@@ -59,12 +63,12 @@
         <param name="llsamplestep" value="0.01"/>
         <param name="lasamplerange" value="0.005"/>
         <param name="lasamplestep" value="0.005"/>
+  </node>-->
+  
+  <node pkg="nxj_teleop" type="teleop.py" name="teleop" output="screen" respawn="true">
   </node>
   
-  <node pkg="art_teleop" type="teleop.py" name="teleop" output="screen" respawn="true">
-  </node>
-  
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nxt_steering_control)/rviz_config.vcg">
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nxt_steering_control)/rviz_config_costmap.vcg">
   </node>
   
   
