@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-import roslib; roslib.load_manifest('nxt_steering_control')  
+import roslib; roslib.load_manifest('nxt_carlike')  
 import rospy
 import math
 import thread
 from art_msgs.msg import CarDriveStamped
-from nxt_rosjava_msgs.msg import JointCommand, Range
-from sensor_msgs.msg import JointState, PointCloud, LaserScan
+from nxt_lejos_ros_msgs.msg import JointPosition
+from sensor_msgs.msg import JointState, PointCloud, LaserScan, Range
 from geometry_msgs.msg import Point32
 from math import sin, cos
 
@@ -15,12 +15,12 @@ my_lock = thread.allocate_lock()
 
 class NXT_radar:
   def __init__(self):
-        self.pub_JC = rospy.Publisher('joint_command', JointCommand)
+        self.pub_JC = rospy.Publisher('joint_position', JointPosition)
         self.pub_PC = rospy.Publisher('cloud_topic', PointCloud)
         self.pub_LS = rospy.Publisher('base_scan', LaserScan)
         rospy.sleep(2.);
         self.sub_us = rospy.Subscriber('ultrasonic_sensor', Range, self.sub_cb_us)
-        self.sub_js = rospy.Subscriber('joint_state', JointState, self.sub_cb_js)
+        self.sub_js = rospy.Subscriber('radar_motor', JointState, self.sub_cb_js)
         self.init_radar_motor = False
 	self.last_angle_cmd = 450;
 	self.last_range = 0;
@@ -50,10 +50,8 @@ class NXT_radar:
 	      
 	      
 	      #command for run motor radar
-	      JC = JointCommand();
+	      JC = JointPosition();
 	      JC.name = 'radar_motor';
-	      JC.type = 'to_angle'; 
-	      JC.speed = 300;
 	      self.last_angle_cmd = -self.last_angle_cmd;
 	      JC.angle = self.last_angle_cmd;
 	      self.pub_JC.publish(JC);
