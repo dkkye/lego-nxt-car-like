@@ -1,0 +1,77 @@
+<launch>
+
+  <param name="robot_description" textfile="$(find nxt_steering_control)/robot.urdf"/>
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    <param name="publish_frequency" value="100.0"/>
+  </node>
+ 
+  <node pkg="nxt_carlike" type="parking.py" name="parking" output="screen" respawn="true">
+  </node>
+  
+  <node pkg="nxt_carlike" type="encoder_to_odom.py" name="encoder_to_odom" output="screen" respawn="true">
+  </node>
+
+  <node pkg="nxt_carlike" type="nxt_steering_control.py" name="nxt_steering_control" output="screen" respawn="true">
+  </node>
+
+  <!-- fixed transform -->
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_fixed_publisher" args="0 0 0 0 0 0 base_footprint base_link 10"/>
+  <!-- 
+  <node pkg="tf" type="static_transform_publisher" name="imu_fixed_publisher" args="0 0 0 0 0 0 base_footprint imu  10"/>
+ -->
+  <!-- robot pose ekf
+  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="odom_combined"/>
+    <remap from="imu_data" to="/android/imu" />
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="true"/>
+    <param name="vo_used" value="false"/>
+  </node>--> 
+  <!--
+  <node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" >
+    <rosparam file="$(find nxt_steering_control)/nxtcar_costmap.yaml" command="load" ns="costmap" />
+  </node>-->
+  
+  <!--<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+        <remap from="scan" to="base_scan" />
+        <param name="base_frame" value="base_footprint" />
+        <param name="odom_frame" value="odom_combined"/>
+        <param name="map_update_interval" value="5.0"/>
+        <param name="maxUrange" value="2.5"/>
+        <param name="sigma" value="0.05"/>
+        <param name="kernelSize" value="1"/>
+        <param name="lstep" value="0.05"/>
+        <param name="astep" value="0.05"/>
+        <param name="iterations" value="5"/>
+        <param name="lsigma" value="0.075"/>
+        <param name="ogain" value="3.0"/>
+        <param name="lskip" value="0"/>
+        <param name="srr" value="0.01"/>
+        <param name="srt" value="0.02"/>
+        <param name="str" value="0.01"/>
+        <param name="stt" value="0.02"/>
+        <param name="linearUpdate" value="0.5"/>
+        <param name="angularUpdate" value="0.436"/>
+        <param name="temporalUpdate" value="-1.0"/>
+        <param name="resampleThreshold" value="0.5"/>
+        <param name="particles" value="80"/>
+        <param name="xmin" value="-10.0" />
+        <param name="ymin" value="-10.0" />
+        <param name="xmax" value="10.0" />
+        <param name="ymax" value="10.0" />
+        <param name="delta" value="0.025"/>
+        <param name="llsamplerange" value="0.01"/>
+        <param name="llsamplestep" value="0.01"/>
+        <param name="lasamplerange" value="0.005"/>
+        <param name="lasamplestep" value="0.005"/>
+  </node>-->
+  
+  <!--<node pkg="nxj_teleop" type="teleop.py" name="teleop" output="screen" respawn="true">
+  </node>
+  
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nxt_steering_control)/rviz_config_costmap.vcg">
+  </node>-->
+  
+  
+</launch>

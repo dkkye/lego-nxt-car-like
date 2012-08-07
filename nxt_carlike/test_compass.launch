@@ -1,0 +1,6 @@
+<launch>
+  
+  <node pkg="nxt_carlike" type="compass.py" name="compass" output="screen" respawn="true">
+  </node>
+    
+</launch>

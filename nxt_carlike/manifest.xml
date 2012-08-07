@@ -1,0 +1,19 @@
+<package>
+  <description brief="nxt_carlike">
+
+     nxt_carlike
+
+  </description>
+  <author>alex</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/nxt_carlike</url>
+  <depend package="rospy"/>
+  <depend package="art_msgs"/>
+  <depend package="nxt_lejos_ros_msgs" />
+  <depend package="std_msgs" />
+  <depend package="geometry_msgs"/>
+  <depend package="nav_msgs" />
+</package>
+
+
