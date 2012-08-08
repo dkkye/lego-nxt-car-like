@@ -16,6 +16,6 @@ Description of folders:
   * nxj_teleop is clone of art_teleop
   * nxt_carlike contains python scripts for self-parking NXT robot (http://youtu.be/AZlVnxzhT9c)
   * nxj_rosjava is not used now (Now I use lcp_proxy from http://lejos.svn.sourceforge.net/)
-  * nxt_steering control contains common scripts for control ackermann steering 
+  * nxt_steering control contains common scripts for control ackermann steering (example http://youtu.be/SeT2WpBgJkQ)
   * ros_sensors_androind contains android project for read smartphone sensors and publish to ROS
   * test_opencv contains simple project for test using OpenCV in ROS 
