@@ -12,10 +12,10 @@ Description of folders:
   * ackermann_plugin_gazebo contains gazebo plugin for simulation ackermann steering
   * carlike_local_planer contains plugin for nav_core that implements local planning for car-like robots
   * car_like_simulation contains launch and other files for simulation car-like robot in gazebo
-  * nxj_ros_android is not used now (Now I use lcp_proxy from http://lejos.svn.sourceforge.net/)
+  * nxj_ros_android is not used now (Now I use http://www.ros.org/wiki/nxt_lejos/)
   * nxj_teleop is clone of art_teleop
   * [nxt_carlike] contains python scripts for self-parking NXT robot (http://youtu.be/AZlVnxzhT9c)
-  * nxj_rosjava is not used now (Now I use lcp_proxy from http://lejos.svn.sourceforge.net/)
+  * nxj_rosjava is not used now (Now I use http://www.ros.org/wiki/nxt_lejos)
   * nxt_steering control contains common scripts for control ackermann steering (example http://youtu.be/SeT2WpBgJkQ)
   * ros_sensors_androind contains android project for read smartphone sensors and publish to ROS
   * test_opencv contains simple project for test using OpenCV in ROS 
